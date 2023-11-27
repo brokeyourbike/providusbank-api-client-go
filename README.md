@@ -1,2 +1,2 @@
-# providus-bank-api-client-go
+# providusbank-api-client-go
 Providus Bank API Client for Go
