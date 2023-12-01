@@ -1,0 +1,8 @@
+{
+    "account_number": "12345678",
+    "account_name": "EXAMPLE",
+    "requestSuccessful": true,
+    "responseMessage": "OPERATION SUCCESSFUL",
+    "responseCode": "00",
+    "initiationTranRef": "EXAMPLE-2102120957317052"
+}

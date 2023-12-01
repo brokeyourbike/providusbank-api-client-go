@@ -1,0 +1,8 @@
+{
+    "account_number": "12345678",
+    "account_name": "MERCHANT",
+    "bvn": "",
+    "requestSuccessful": true,
+    "responseMessage": "Reserved Account Generated Successfully",
+    "responseCode": "00"
+}

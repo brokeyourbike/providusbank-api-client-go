@@ -1,0 +1,8 @@
+{
+    "account_number": "",
+    "account_name": "",
+    "requestSuccessful": false,
+    "responseMessage": "Authentication Failed",
+    "responseCode": "05",
+    "initiationTranRef": ""
+}
