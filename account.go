@@ -87,3 +87,28 @@ func (c *accountClient) BlacklistAccount(ctx context.Context, payload BlacklistA
 	req.DecodeTo(&data)
 	return data, c.do(ctx, req)
 }
+
+type VerifyTransactionResponse struct {
+	SessionID     string  `json:"sessionId"`
+	ChannelID     string  `json:"channelId"`
+	AccountNumber string  `json:"accountNumber"`
+	Currency      string  `json:"currency"`
+	Amount        float64 `json:"transactionAmount"`
+	SettledAmount float64 `json:"settledAmount"`
+	FeeAmount     float64 `json:"feeAmount"`
+	VATAmount     float64 `json:"vatAmount"`
+	Remarks       string  `json:"tranRemarks"`
+	Date          Time    `json:"tranDateTime"`
+}
+
+func (c *accountClient) VerifyTransaction(ctx context.Context, sessionID string) (data VerifyTransactionResponse, err error) {
+	req, err := c.newRequest(ctx, http.MethodPost, "/api/PiPverifyTransaction", nil)
+	if err != nil {
+		return data, fmt.Errorf("failed to create request: %w", err)
+	}
+
+	req.AddQueryParam("session_id", sessionID)
+
+	req.DecodeTo(&data)
+	return data, c.do(ctx, req)
+}

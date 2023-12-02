@@ -1,0 +1,13 @@
+{
+    "sessionId": "",
+    "initiationTranRef": "",
+    "accountNumber": "",
+    "tranRemarks": "Transaction not found!!!",
+    "transactionAmount": 0.0,
+    "settledAmount": 0.0,
+    "feeAmount": 0.0,
+    "vatAmount": 0.0,
+    "currency": "",
+    "channelId": "",
+    "tranDateTime": ""
+}

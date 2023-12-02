@@ -1,0 +1,13 @@
+{
+    "sessionId": "123456789",
+    "initiationTranRef": "",
+    "accountNumber": "2385673586",
+    "tranRemarks": "",
+    "transactionAmount": 44.0,
+    "settledAmount": 42.0,
+    "feeAmount": 2.0,
+    "vatAmount": 0.0,
+    "currency": "NGN",
+    "channelId": "",
+    "tranDateTime": "2/11/2021 6:08:34 PM"
+}

@@ -35,6 +35,12 @@ var blacklistAccountFail []byte
 //go:embed testdata/BlacklistAccount-success.json
 var blacklistAccountSuccess []byte
 
+//go:embed testdata/VerifyTransaction-fail.json
+var verifyTransactionFail []byte
+
+//go:embed testdata/VerifyTransaction-success.json
+var verifyTransactionSuccess []byte
+
 func TestCreateDynamicAccount_AuthFailed(t *testing.T) {
 	mockHttpClient := providusbank.NewMockHttpClient(t)
 	client := providusbank.NewAccountClient("a.com", "john", "pass", providusbank.WithHTTPClient(mockHttpClient))
@@ -124,4 +130,30 @@ func TestBlacklistAccount_Success(t *testing.T) {
 	require.NoError(t, err)
 
 	assert.True(t, got.Success)
+}
+
+func TestVerifyTransaction_Fail(t *testing.T) {
+	mockHttpClient := providusbank.NewMockHttpClient(t)
+	client := providusbank.NewAccountClient("a.com", "john", "pass", providusbank.WithHTTPClient(mockHttpClient))
+
+	resp := &http.Response{StatusCode: http.StatusOK, Body: io.NopCloser(bytes.NewReader(verifyTransactionFail))}
+	mockHttpClient.On("Do", mock.AnythingOfType("*http.Request")).Return(resp, nil).Once()
+
+	got, err := client.VerifyTransaction(context.TODO(), "")
+	require.NoError(t, err)
+
+	assert.Equal(t, "", got.SessionID)
+}
+
+func TestVerifyTransaction_Success(t *testing.T) {
+	mockHttpClient := providusbank.NewMockHttpClient(t)
+	client := providusbank.NewAccountClient("a.com", "john", "pass", providusbank.WithHTTPClient(mockHttpClient))
+
+	resp := &http.Response{StatusCode: http.StatusOK, Body: io.NopCloser(bytes.NewReader(verifyTransactionSuccess))}
+	mockHttpClient.On("Do", mock.AnythingOfType("*http.Request")).Return(resp, nil).Once()
+
+	got, err := client.VerifyTransaction(context.TODO(), "123456789")
+	require.NoError(t, err)
+
+	assert.Equal(t, "123456789", got.SessionID)
 }
