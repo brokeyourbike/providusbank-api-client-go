@@ -1,0 +1,7 @@
+{
+    "timestamp": "2023-12-02T18:50:09.932+0000",
+    "status": 500,
+    "error": "Internal Server Error",
+    "message": "java.lang.NullPointerException",
+    "path": "/postingrest/GetProvidusAccount"
+}
