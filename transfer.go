@@ -15,6 +15,7 @@ type NIPBanksResponse struct {
 	} `json:"banks"`
 }
 
+// GetNIPBanks returns the list of institutions currently enrolled on NIP and their respective NIP bank codes.
 func (c *transferClient) GetNIPBanks(ctx context.Context) (data NIPBanksResponse, err error) {
 	req, err := c.newRequest(ctx, http.MethodGet, "/api/PiPCreateDynamicAccountNumber", nil)
 	if err != nil {
@@ -47,8 +48,13 @@ type getBvnDetailsPayload struct {
 type BVNDetailsResponse struct {
 	ResponseCode    string `json:"responseCode"`
 	ResponseMessage string `json:"responseMessage"`
+	FirstName       string `json:"firstName"`
+	MiddleName      string `json:"middleName"`
+	LastName        string `json:"surname"`
+	DOB             Time   `json:"dateOfBirth"`
 }
 
+// GetBVNDetails validates the supplied single BVN and returns the full demography details associated with the BVN.
 func (c *transferClient) GetBVNDetails(ctx context.Context, bvn string) (data BVNDetailsResponse, err error) {
 	req, err := c.newRequest(ctx, http.MethodPost, "/api/GetBVNDetails", &getBvnDetailsPayload{BVN: bvn})
 	if err != nil {
@@ -75,6 +81,8 @@ type TransactionStatusResponse struct {
 	Date            Time   `json:"transactionDateTime"`
 }
 
+// GetTransactionStatus validates the supplied single transaction reference and returns the current status of the transaction.
+// This status is of Providus-to-Providus transactions.
 func (c *transferClient) GetTransactionStatus(ctx context.Context, reference string) (data TransactionStatusResponse, err error) {
 	req, err := c.newRequest(ctx, http.MethodPost, "/api/GetProvidusTransactionStatus", &getTransactionStatusPayload{Reference: reference})
 	if err != nil {
@@ -85,7 +93,19 @@ func (c *transferClient) GetTransactionStatus(ctx context.Context, reference str
 	return data, c.do(ctx, req)
 }
 
-func (c *transferClient) GetNIPTransactionStatus(ctx context.Context, reference string) (data TransactionStatusResponse, err error) {
+type NIPTransactionStatusResponse struct {
+	ResponseCode           string `json:"responseCode"`
+	ResponseMessage        string `json:"responseMessage"`
+	Currency               string `json:"currency"`
+	Amount                 string `json:"amount"`
+	RecipientBankCode      string `json:"recipientBankCode"`
+	RecipientAccountNumber string `json:"recipientAccountNumber"`
+	Reference              string `json:"transactionReference"`
+	Date                   Time   `json:"transactionDateTime"`
+}
+
+// GetNIPTransactionStatus validates the supplied single transaction reference and returns the current status of the transaction.
+func (c *transferClient) GetNIPTransactionStatus(ctx context.Context, reference string) (data NIPTransactionStatusResponse, err error) {
 	req, err := c.newRequest(ctx, http.MethodPost, "/api/GetNIPTransactionStatus", &getTransactionStatusPayload{Reference: reference})
 	if err != nil {
 		return data, fmt.Errorf("failed to create request: %w", err)
@@ -105,6 +125,8 @@ type AccountResponse struct {
 	ResponseMessage string `json:"responseMessage"`
 }
 
+// GetAccount returns the details tied to your account including the balance.
+// This account is the one tied to the username making the call.
 func (c *transferClient) GetAccount(ctx context.Context, accountNumber string) (data AccountResponse, err error) {
 	req, err := c.newRequest(ctx, http.MethodPost, "/api/GetProvidusAccount", &getAccountPayload{AccountNumber: accountNumber})
 	if err != nil {
@@ -131,6 +153,8 @@ type NIPAccountResponse struct {
 	TransactionReference string `json:"transactionReference"`
 }
 
+// GetNIPAccount validates the supplied account number and 3-digit bank code and returns the account details.
+// It can also accept the 6-digit NIP bank code in place of the 3-digit.
 func (c *transferClient) GetNIPAccount(ctx context.Context, bankCode, accountNumber string) (data NIPAccountResponse, err error) {
 	req, err := c.newRequest(ctx, http.MethodPost, "/api/GetNIPAccount", &getNIPAccountPayload{BankCode: bankCode, AccountNumber: accountNumber})
 	if err != nil {
@@ -163,6 +187,7 @@ type FundTransferResponse struct {
 	Reference       string `json:"transactionReference"`
 }
 
+// FundTransfer used to transfer fund from a specified Providus account number to another ProvidusBank account.
 func (c *transferClient) FundTransfer(ctx context.Context, payload FundTransferPayload) (data FundTransferResponse, err error) {
 	req, err := c.newRequest(ctx, http.MethodPost, "/api/ProvidusFundTransfer", &fundTransferPayload{FundTransferPayload: payload})
 	if err != nil {
@@ -196,6 +221,7 @@ type NIPFundTransferResponse struct {
 	SessionID       string `json:"sessionId"`
 }
 
+// NIPFundTransfer used to transfer fund from a specified Providus account number to another account in a different bank.
 func (c *transferClient) NIPFundTransfer(ctx context.Context, payload NIPFundTransferPayload) (data NIPFundTransferResponse, err error) {
 	req, err := c.newRequest(ctx, http.MethodPost, "/api/NIPFundTransfer", &nipFundTransferPayload{NIPFundTransferPayload: payload})
 	if err != nil {
