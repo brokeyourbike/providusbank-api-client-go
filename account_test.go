@@ -51,7 +51,7 @@ func TestCreateDynamicAccount_AuthFailed(t *testing.T) {
 	resp := &http.Response{StatusCode: http.StatusOK, Body: io.NopCloser(bytes.NewReader(createDynamicAccountAuthFailed))}
 	mockHttpClient.On("Do", mock.AnythingOfType("*http.Request")).Return(resp, nil).Once()
 
-	got, err := client.CreateDynamicAccount(context.TODO(), providusbank.DynamicAccountPayload{})
+	got, err := client.CreateDynamicAccount(context.TODO(), "name")
 	require.NoError(t, err)
 
 	assert.False(t, got.Success)
@@ -64,7 +64,7 @@ func TestCreateDynamicAccount_Success(t *testing.T) {
 	resp := &http.Response{StatusCode: http.StatusOK, Body: io.NopCloser(bytes.NewReader(createDynamicAccountSuccess))}
 	mockHttpClient.On("Do", mock.AnythingOfType("*http.Request")).Return(resp, nil).Once()
 
-	got, err := client.CreateDynamicAccount(context.TODO(), providusbank.DynamicAccountPayload{})
+	got, err := client.CreateDynamicAccount(context.TODO(), "name")
 	require.NoError(t, err)
 
 	assert.True(t, got.Success)
@@ -77,7 +77,7 @@ func TestCreateReservedAccount_Success(t *testing.T) {
 	resp := &http.Response{StatusCode: http.StatusOK, Body: io.NopCloser(bytes.NewReader(createReservedAccountSuccess))}
 	mockHttpClient.On("Do", mock.AnythingOfType("*http.Request")).Return(resp, nil).Once()
 
-	got, err := client.CreateReservedAccount(context.TODO(), providusbank.ReservedAccountPayload{})
+	got, err := client.CreateReservedAccount(context.TODO(), "name", "bvn")
 	require.NoError(t, err)
 
 	assert.True(t, got.Success)
@@ -90,7 +90,7 @@ func TestUpdateAccountName_Fail(t *testing.T) {
 	resp := &http.Response{StatusCode: http.StatusOK, Body: io.NopCloser(bytes.NewReader(updateAccountNameFail))}
 	mockHttpClient.On("Do", mock.AnythingOfType("*http.Request")).Return(resp, nil).Once()
 
-	got, err := client.UpdateAccountName(context.TODO(), providusbank.UpdateAccountNamePayload{})
+	got, err := client.UpdateAccountName(context.TODO(), "number", "name")
 	require.NoError(t, err)
 
 	assert.False(t, got.Success)
@@ -103,7 +103,7 @@ func TestUpdateAccountName_Success(t *testing.T) {
 	resp := &http.Response{StatusCode: http.StatusOK, Body: io.NopCloser(bytes.NewReader(updateAccountNameSuccess))}
 	mockHttpClient.On("Do", mock.AnythingOfType("*http.Request")).Return(resp, nil).Once()
 
-	got, err := client.UpdateAccountName(context.TODO(), providusbank.UpdateAccountNamePayload{})
+	got, err := client.UpdateAccountName(context.TODO(), "number", "name")
 	require.NoError(t, err)
 
 	assert.True(t, got.Success)
@@ -116,7 +116,7 @@ func TestBlacklistAccount_Fail(t *testing.T) {
 	resp := &http.Response{StatusCode: http.StatusOK, Body: io.NopCloser(bytes.NewReader(blacklistAccountFail))}
 	mockHttpClient.On("Do", mock.AnythingOfType("*http.Request")).Return(resp, nil).Once()
 
-	got, err := client.BlacklistAccount(context.TODO(), providusbank.BlacklistAccountPayload{})
+	got, err := client.BlacklistAccount(context.TODO(), "number")
 	require.NoError(t, err)
 
 	assert.False(t, got.Success)
@@ -129,7 +129,7 @@ func TestBlacklistAccount_Success(t *testing.T) {
 	resp := &http.Response{StatusCode: http.StatusOK, Body: io.NopCloser(bytes.NewReader(blacklistAccountSuccess))}
 	mockHttpClient.On("Do", mock.AnythingOfType("*http.Request")).Return(resp, nil).Once()
 
-	got, err := client.BlacklistAccount(context.TODO(), providusbank.BlacklistAccountPayload{})
+	got, err := client.BlacklistAccount(context.TODO(), "number")
 	require.NoError(t, err)
 
 	assert.True(t, got.Success)
@@ -181,7 +181,7 @@ func TestRepushTransaction_Fail(t *testing.T) {
 	resp := &http.Response{StatusCode: http.StatusOK, Body: io.NopCloser(bytes.NewReader(repushTransactionFail))}
 	mockHttpClient.On("Do", mock.AnythingOfType("*http.Request")).Return(resp, nil).Once()
 
-	got, err := client.RepushTransaction(context.TODO(), providusbank.RepushTransactionPayload{})
+	got, err := client.RepushTransaction(context.TODO(), "session_id", "settlement_id")
 	require.NoError(t, err)
 
 	assert.False(t, got.Success)

@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-type DynamicAccountPayload struct {
+type dynamicAccountPayload struct {
 	AccountName string `json:"account_name"`
 }
 
@@ -19,8 +19,8 @@ type CreateDynamicAccountResponse struct {
 	Reference       string `json:"initiationTranRef"`
 }
 
-func (c *accountClient) CreateDynamicAccount(ctx context.Context, payload DynamicAccountPayload) (data CreateDynamicAccountResponse, err error) {
-	req, err := c.newRequest(ctx, http.MethodPost, "/api/PiPCreateDynamicAccountNumber", payload)
+func (c *accountClient) CreateDynamicAccount(ctx context.Context, accountName string) (data CreateDynamicAccountResponse, err error) {
+	req, err := c.newRequest(ctx, http.MethodPost, "/api/PiPCreateDynamicAccountNumber", dynamicAccountPayload{AccountName: accountName})
 	if err != nil {
 		return data, fmt.Errorf("failed to create request: %w", err)
 	}
@@ -29,7 +29,7 @@ func (c *accountClient) CreateDynamicAccount(ctx context.Context, payload Dynami
 	return data, c.do(ctx, req)
 }
 
-type ReservedAccountPayload struct {
+type reservedAccountPayload struct {
 	AccountName string `json:"account_name"`
 	BVN         string `json:"bvn"`
 }
@@ -43,8 +43,8 @@ type CreateReservedAccountResponse struct {
 	BVN             string `json:"bvn"`
 }
 
-func (c *accountClient) CreateReservedAccount(ctx context.Context, payload ReservedAccountPayload) (data CreateReservedAccountResponse, err error) {
-	req, err := c.newRequest(ctx, http.MethodPost, "/api/PiPCreateReservedAccountNumber", payload)
+func (c *accountClient) CreateReservedAccount(ctx context.Context, accountName, bvn string) (data CreateReservedAccountResponse, err error) {
+	req, err := c.newRequest(ctx, http.MethodPost, "/api/PiPCreateReservedAccountNumber", reservedAccountPayload{AccountName: accountName, BVN: bvn})
 	if err != nil {
 		return data, fmt.Errorf("failed to create request: %w", err)
 	}
@@ -53,7 +53,7 @@ func (c *accountClient) CreateReservedAccount(ctx context.Context, payload Reser
 	return data, c.do(ctx, req)
 }
 
-type UpdateAccountNamePayload struct {
+type updateAccountNamePayload struct {
 	AccountNumber string `json:"account_number"`
 	AccountName   string `json:"account_name"`
 }
@@ -64,8 +64,8 @@ type AccountOperationResponse struct {
 	ResponseMessage string `json:"responseMessage"`
 }
 
-func (c *accountClient) UpdateAccountName(ctx context.Context, payload UpdateAccountNamePayload) (data AccountOperationResponse, err error) {
-	req, err := c.newRequest(ctx, http.MethodPost, "/api/PiPUpdateAccountName", payload)
+func (c *accountClient) UpdateAccountName(ctx context.Context, accountNumber, accountName string) (data AccountOperationResponse, err error) {
+	req, err := c.newRequest(ctx, http.MethodPost, "/api/PiPUpdateAccountName", updateAccountNamePayload{AccountNumber: accountNumber, AccountName: accountName})
 	if err != nil {
 		return data, fmt.Errorf("failed to create request: %w", err)
 	}
@@ -74,12 +74,12 @@ func (c *accountClient) UpdateAccountName(ctx context.Context, payload UpdateAcc
 	return data, c.do(ctx, req)
 }
 
-type BlacklistAccountPayload struct {
+type blacklistAccountPayload struct {
 	AccountNumber string `json:"account_number"`
 }
 
-func (c *accountClient) BlacklistAccount(ctx context.Context, payload BlacklistAccountPayload) (data AccountOperationResponse, err error) {
-	req, err := c.newRequest(ctx, http.MethodPost, "/api/PiPBlacklistAccount", payload)
+func (c *accountClient) BlacklistAccount(ctx context.Context, accountNumber string) (data AccountOperationResponse, err error) {
+	req, err := c.newRequest(ctx, http.MethodPost, "/api/PiPBlacklistAccount", blacklistAccountPayload{AccountNumber: accountNumber})
 	if err != nil {
 		return data, fmt.Errorf("failed to create request: %w", err)
 	}
@@ -130,7 +130,7 @@ func (c *accountClient) VerifyTransactionWithSettlementID(ctx context.Context, s
 	return data, c.do(ctx, req)
 }
 
-type RepushTransactionPayload struct {
+type repushTransactionPayload struct {
 	SessionID    string `json:"session_id"`
 	SettlementID string `json:"settlement_id"`
 }
@@ -144,8 +144,8 @@ type RepushTransactionResponse struct {
 	InitiationReference string `json:"initiationTranRef"`
 }
 
-func (c *accountClient) RepushTransaction(ctx context.Context, payload RepushTransactionPayload) (data RepushTransactionResponse, err error) {
-	req, err := c.newRequest(ctx, http.MethodPost, "/api/PiP_RepushTransaction_SettlementId", payload)
+func (c *accountClient) RepushTransaction(ctx context.Context, sessionID, settlementID string) (data RepushTransactionResponse, err error) {
+	req, err := c.newRequest(ctx, http.MethodPost, "/api/PiP_RepushTransaction_SettlementId", repushTransactionPayload{SessionID: sessionID, SettlementID: settlementID})
 	if err != nil {
 		return data, fmt.Errorf("failed to create request: %w", err)
 	}
