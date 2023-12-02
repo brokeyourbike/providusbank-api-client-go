@@ -41,6 +41,9 @@ var verifyTransactionFail []byte
 //go:embed testdata/VerifyTransaction-success.json
 var verifyTransactionSuccess []byte
 
+//go:embed testdata/RepushTransaction-fail.json
+var repushTransactionFail []byte
+
 func TestCreateDynamicAccount_AuthFailed(t *testing.T) {
 	mockHttpClient := providusbank.NewMockHttpClient(t)
 	client := providusbank.NewAccountClient("a.com", "john", "pass", providusbank.WithHTTPClient(mockHttpClient))
@@ -169,4 +172,17 @@ func TestVerifyTransactionWithSettlementID_Success(t *testing.T) {
 	require.NoError(t, err)
 
 	assert.Equal(t, "204210202000000700001", got.SettlementID)
+}
+
+func TestRepushTransaction_Fail(t *testing.T) {
+	mockHttpClient := providusbank.NewMockHttpClient(t)
+	client := providusbank.NewAccountClient("a.com", "john", "pass", providusbank.WithHTTPClient(mockHttpClient))
+
+	resp := &http.Response{StatusCode: http.StatusOK, Body: io.NopCloser(bytes.NewReader(repushTransactionFail))}
+	mockHttpClient.On("Do", mock.AnythingOfType("*http.Request")).Return(resp, nil).Once()
+
+	got, err := client.RepushTransaction(context.TODO(), providusbank.RepushTransactionPayload{})
+	require.NoError(t, err)
+
+	assert.False(t, got.Success)
 }

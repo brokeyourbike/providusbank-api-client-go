@@ -129,3 +129,27 @@ func (c *accountClient) VerifyTransactionWithSettlementID(ctx context.Context, s
 	req.DecodeTo(&data)
 	return data, c.do(ctx, req)
 }
+
+type RepushTransactionPayload struct {
+	SessionID    string `json:"session_id"`
+	SettlementID string `json:"settlement_id"`
+}
+
+type RepushTransactionResponse struct {
+	Success             bool   `json:"requestSuccessful"`
+	ResponseCode        string `json:"responseCode"`
+	ResponseMessage     string `json:"responseMessage"`
+	AccountNumber       string `json:"account_number"`
+	AccountName         string `json:"account_name"`
+	InitiationReference string `json:"initiationTranRef"`
+}
+
+func (c *accountClient) RepushTransaction(ctx context.Context, payload RepushTransactionPayload) (data RepushTransactionResponse, err error) {
+	req, err := c.newRequest(ctx, http.MethodPost, "/api/PiP_RepushTransaction_SettlementId", payload)
+	if err != nil {
+		return data, fmt.Errorf("failed to create request: %w", err)
+	}
+
+	req.DecodeTo(&data)
+	return data, c.do(ctx, req)
+}
