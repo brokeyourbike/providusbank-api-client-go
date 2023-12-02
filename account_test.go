@@ -157,3 +157,16 @@ func TestVerifyTransaction_Success(t *testing.T) {
 
 	assert.Equal(t, "123456789", got.SessionID)
 }
+
+func TestVerifyTransactionWithSettlementID_Success(t *testing.T) {
+	mockHttpClient := providusbank.NewMockHttpClient(t)
+	client := providusbank.NewAccountClient("a.com", "john", "pass", providusbank.WithHTTPClient(mockHttpClient))
+
+	resp := &http.Response{StatusCode: http.StatusOK, Body: io.NopCloser(bytes.NewReader(verifyTransactionSuccess))}
+	mockHttpClient.On("Do", mock.AnythingOfType("*http.Request")).Return(resp, nil).Once()
+
+	got, err := client.VerifyTransactionWithSettlementID(context.TODO(), "204210202000000700001")
+	require.NoError(t, err)
+
+	assert.Equal(t, "204210202000000700001", got.SettlementID)
+}

@@ -3,11 +3,15 @@
     "initiationTranRef": "",
     "accountNumber": "2385673586",
     "tranRemarks": "",
-    "transactionAmount": 44.0,
-    "settledAmount": 42.0,
-    "feeAmount": 2.0,
+    "transactionAmount": 10593.0,
+    "settledAmount": 0.0,
+    "feeAmount": 0.0,
     "vatAmount": 0.0,
     "currency": "NGN",
+    "settlementId": "204210202000000700001",
+    "sourceAccountNumber": "",
+    "sourceAccountName": "",
+    "sourceBankName": "",
     "channelId": "",
-    "tranDateTime": "2/11/2021 6:08:34 PM"
+    "tranDateTime": "2/13/2021 4:11:09 PM"
 }
