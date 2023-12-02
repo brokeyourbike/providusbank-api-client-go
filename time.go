@@ -18,6 +18,8 @@ func (t *Time) UnmarshalJSON(b []byte) error {
 
 	formats := []string{
 		"1/02/2006 3:04:05 PM",
+		"2006-01-02 15:04:05",
+		"2006-01-02T15:04:05.999-0700",
 	}
 
 	for _, f := range formats {

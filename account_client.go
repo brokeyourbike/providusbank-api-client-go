@@ -14,6 +14,13 @@ import (
 )
 
 type AccountClient interface {
+	CreateDynamicAccount(ctx context.Context, payload DynamicAccountPayload) (data CreateDynamicAccountResponse, err error)
+	CreateReservedAccount(ctx context.Context, payload ReservedAccountPayload) (data CreateReservedAccountResponse, err error)
+	UpdateAccountName(ctx context.Context, payload UpdateAccountNamePayload) (data AccountOperationResponse, err error)
+	BlacklistAccount(ctx context.Context, payload BlacklistAccountPayload) (data AccountOperationResponse, err error)
+	VerifyTransaction(ctx context.Context, sessionID string) (data VerifyTransactionResponse, err error)
+	VerifyTransactionWithSettlementID(ctx context.Context, settlementID string) (data VerifyTransactionResponse, err error)
+	RepushTransaction(ctx context.Context, payload RepushTransactionPayload) (data RepushTransactionResponse, err error)
 }
 
 var _ AccountClient = (*accountClient)(nil)
@@ -49,13 +56,13 @@ func (c *accountClient) newRequest(ctx context.Context, method, url string, body
 
 	var b []byte
 
-	switch req.Method {
-	case http.MethodPut, http.MethodPost, http.MethodPatch, http.MethodDelete:
+	if body != nil {
 		b, err = json.Marshal(body)
 		if err != nil {
 			return nil, fmt.Errorf("failed to marshal payload: %w", err)
 		}
 		req.Body = io.NopCloser(bytes.NewReader(b))
+		req.Header.Set("Content-Type", "application/json")
 	}
 
 	if c.logger != nil {
@@ -68,39 +75,8 @@ func (c *accountClient) newRequest(ctx context.Context, method, url string, body
 
 	signature := sha512.Sum512([]byte(fmt.Sprintf("%s:%s", c.token, c.secret)))
 
-	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Accept", "application/json")
 	req.Header.Set("Client-Id", c.token)
 	req.Header.Set("X-Auth-Signature", fmt.Sprintf("%x", signature))
 	return NewRequest(req), nil
-}
-
-func (c *accountClient) do(ctx context.Context, req *request) error {
-	resp, err := c.httpClient.Do(req.req)
-	if err != nil {
-		return fmt.Errorf("failed to send request: %w", err)
-	}
-	defer resp.Body.Close()
-
-	b, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return fmt.Errorf("failed to read response body: %w", err)
-	}
-
-	resp.Body = io.NopCloser(bytes.NewBuffer(b))
-
-	if c.logger != nil {
-		c.logger.WithContext(ctx).WithFields(logrus.Fields{
-			"http.response.status_code":  resp.StatusCode,
-			"http.response.body.content": string(b),
-			"http.response.headers":      resp.Header,
-		}).Debug("providusbank.client -> response")
-	}
-
-	if req.decodeTo != nil {
-		if err := json.NewDecoder(resp.Body).Decode(req.decodeTo); err != nil {
-			return fmt.Errorf("failed to decode response: %w", err)
-		}
-	}
-
-	return nil
 }

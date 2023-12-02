@@ -1,0 +1,14 @@
+{
+    "banks": [
+        {
+            "bankCode": "110005",
+            "bankName": "3LINE CARD MANAGEMENT LIMITED"
+        },
+        {
+            "bankCode": "120001",
+            "bankName": "9 PAYMENT SOLUTIONS BANK"
+        }
+    ],
+    "responseMessage": "SUCCESS",
+    "responseCode": "00"
+}

@@ -1,0 +1,10 @@
+{
+    "amount": "2.50",
+    "creditAccount": "1234",
+    "debitAccount": "56789",
+    "transactionReference": "ab003ed9",
+    "transactionDateTime": "2023-04-26 09:09:41",
+    "currency": "NGN",
+    "responseMessage": "OPERATION SUCCESSFUL",
+    "responseCode": "00"
+}
