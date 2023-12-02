@@ -14,13 +14,13 @@ import (
 )
 
 type AccountClient interface {
-	CreateDynamicAccount(ctx context.Context, payload DynamicAccountPayload) (data CreateDynamicAccountResponse, err error)
-	CreateReservedAccount(ctx context.Context, payload ReservedAccountPayload) (data CreateReservedAccountResponse, err error)
-	UpdateAccountName(ctx context.Context, payload UpdateAccountNamePayload) (data AccountOperationResponse, err error)
-	BlacklistAccount(ctx context.Context, payload BlacklistAccountPayload) (data AccountOperationResponse, err error)
+	CreateDynamicAccount(ctx context.Context, accountName string) (data CreateDynamicAccountResponse, err error)
+	CreateReservedAccount(ctx context.Context, accountName, bvn string) (data CreateReservedAccountResponse, err error)
+	UpdateAccountName(ctx context.Context, accountNumber, accountName string) (data AccountOperationResponse, err error)
+	BlacklistAccount(ctx context.Context, accountNumber string) (data AccountOperationResponse, err error)
 	VerifyTransaction(ctx context.Context, sessionID string) (data VerifyTransactionResponse, err error)
 	VerifyTransactionWithSettlementID(ctx context.Context, settlementID string) (data VerifyTransactionResponse, err error)
-	RepushTransaction(ctx context.Context, payload RepushTransactionPayload) (data RepushTransactionResponse, err error)
+	RepushTransaction(ctx context.Context, sessionID, settlementID string) (data RepushTransactionResponse, err error)
 }
 
 var _ AccountClient = (*accountClient)(nil)
