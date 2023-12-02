@@ -13,6 +13,14 @@ import (
 )
 
 type TransferClient interface {
+	GetNIPBanks(ctx context.Context) (data NIPBanksResponse, err error)
+	GetBVNDetails(ctx context.Context, bvn string) (data BVNDetailsResponse, err error)
+	GetTransactionStatus(ctx context.Context, reference string) (data TransactionStatusResponse, err error)
+	GetNIPTransactionStatus(ctx context.Context, reference string) (data NIPTransactionStatusResponse, err error)
+	GetAccount(ctx context.Context, accountNumber string) (data AccountResponse, err error)
+	GetNIPAccount(ctx context.Context, bankCode, accountNumber string) (data NIPAccountResponse, err error)
+	FundTransfer(ctx context.Context, payload FundTransferPayload) (data FundTransferResponse, err error)
+	NIPFundTransfer(ctx context.Context, payload NIPFundTransferPayload) (data NIPFundTransferResponse, err error)
 }
 
 var _ TransferClient = (*transferClient)(nil)
