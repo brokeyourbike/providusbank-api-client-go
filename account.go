@@ -89,16 +89,21 @@ func (c *accountClient) BlacklistAccount(ctx context.Context, payload BlacklistA
 }
 
 type VerifyTransactionResponse struct {
-	SessionID     string  `json:"sessionId"`
-	ChannelID     string  `json:"channelId"`
-	AccountNumber string  `json:"accountNumber"`
-	Currency      string  `json:"currency"`
-	Amount        float64 `json:"transactionAmount"`
-	SettledAmount float64 `json:"settledAmount"`
-	FeeAmount     float64 `json:"feeAmount"`
-	VATAmount     float64 `json:"vatAmount"`
-	Remarks       string  `json:"tranRemarks"`
-	Date          Time    `json:"tranDateTime"`
+	SessionID           string  `json:"sessionId"`
+	SettlementID        string  `json:"settlementId"`
+	ChannelID           string  `json:"channelId"`
+	AccountNumber       string  `json:"accountNumber"`
+	SourceAccountNumber string  `json:"sourceAccountNumber"`
+	SourceAccountName   string  `json:"sourceAccountName"`
+	SourceBankName      string  `json:"sourceBankName"`
+	Currency            string  `json:"currency"`
+	Amount              float64 `json:"transactionAmount"`
+	SettledAmount       float64 `json:"settledAmount"`
+	FeeAmount           float64 `json:"feeAmount"`
+	VATAmount           float64 `json:"vatAmount"`
+	InitiationReference string  `json:"initiationTranRef"`
+	Remarks             string  `json:"tranRemarks"`
+	Date                Time    `json:"tranDateTime"`
 }
 
 func (c *accountClient) VerifyTransaction(ctx context.Context, sessionID string) (data VerifyTransactionResponse, err error) {
@@ -108,6 +113,18 @@ func (c *accountClient) VerifyTransaction(ctx context.Context, sessionID string)
 	}
 
 	req.AddQueryParam("session_id", sessionID)
+
+	req.DecodeTo(&data)
+	return data, c.do(ctx, req)
+}
+
+func (c *accountClient) VerifyTransactionWithSettlementID(ctx context.Context, settlementID string) (data VerifyTransactionResponse, err error) {
+	req, err := c.newRequest(ctx, http.MethodGet, "/api/PiPverifyTransaction_settlementid", nil)
+	if err != nil {
+		return data, fmt.Errorf("failed to create request: %w", err)
+	}
+
+	req.AddQueryParam("settlement_id", settlementID)
 
 	req.DecodeTo(&data)
 	return data, c.do(ctx, req)
