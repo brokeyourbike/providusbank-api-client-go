@@ -102,7 +102,7 @@ type VerifyTransactionResponse struct {
 }
 
 func (c *accountClient) VerifyTransaction(ctx context.Context, sessionID string) (data VerifyTransactionResponse, err error) {
-	req, err := c.newRequest(ctx, http.MethodPost, "/api/PiPverifyTransaction", nil)
+	req, err := c.newRequest(ctx, http.MethodGet, "/api/PiPverifyTransaction", nil)
 	if err != nil {
 		return data, fmt.Errorf("failed to create request: %w", err)
 	}
