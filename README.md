@@ -16,7 +16,8 @@ go get github.com/brokeyourbike/providusbank-api-client-go
 ## Usage
 
 ```go
-client := providusbank.NewClient("providusbank.com", "client_id", "client_secret")
+accountClient := providusbank.NewAccountClient("providusbank.com", "client_id", "client_secret")
+transferClient := providusbank.NewTransferClient("providusbank.com", "username", "password")
 ```
 
 ## Authors
