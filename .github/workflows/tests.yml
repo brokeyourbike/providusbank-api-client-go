@@ -29,7 +29,7 @@ jobs:
       env:
         CC_TEST_REPORTER_ID: ${{ secrets.CODECLIMATE_TOKEN }}
       with:
-        prefix: 'github.com/brokeyourbike/paystack-api-client-go'
+        prefix: 'github.com/brokeyourbike/providusbank-api-client-go'
         coverageLocations: ./coverage.out:gocov
 
     - uses: codecov/codecov-action@v3
