@@ -65,7 +65,9 @@ func (c *transferClient) newRequest(ctx context.Context, method, url string, bod
 		if err != nil {
 			return nil, fmt.Errorf("failed to marshal payload: %w", err)
 		}
+
 		req.Body = io.NopCloser(bytes.NewReader(b))
+		req.ContentLength = int64(len(b))
 		req.Header.Set("Content-Type", "application/json")
 	}
 
@@ -77,6 +79,5 @@ func (c *transferClient) newRequest(ctx context.Context, method, url string, bod
 		}).Debug("providusbank.client -> request")
 	}
 
-	req.Header.Set("Accept-Encoding", "identity")
 	return NewRequest(req), nil
 }

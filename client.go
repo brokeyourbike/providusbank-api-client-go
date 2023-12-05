@@ -1,7 +1,6 @@
 package providusbank
 
 import (
-	"bytes"
 	"context"
 	"encoding/json"
 	"fmt"
@@ -48,8 +47,6 @@ func (c *client) do(ctx context.Context, req *request) error {
 	if err != nil {
 		return fmt.Errorf("failed to read response body: %w", err)
 	}
-
-	resp.Body = io.NopCloser(bytes.NewBuffer(b))
 
 	if c.logger != nil {
 		c.logger.WithContext(ctx).WithFields(logrus.Fields{
