@@ -68,7 +68,7 @@ func (c *client) do(ctx context.Context, req *request) error {
 	}
 
 	if req.decodeTo != nil {
-		if err := json.NewDecoder(resp.Body).Decode(req.decodeTo); err != nil {
+		if err := json.Unmarshal(b, req.decodeTo); err != nil {
 			return fmt.Errorf("failed to decode response: %w", err)
 		}
 	}
