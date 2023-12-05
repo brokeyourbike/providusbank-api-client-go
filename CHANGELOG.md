@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.1.1](https://www.github.com/brokeyourbike/providusbank-api-client-go/compare/v0.1.0...v0.1.1) (2023-12-05)
+
+
+### Bug Fixes
+
+* body and identity ([8580ba8](https://www.github.com/brokeyourbike/providusbank-api-client-go/commit/8580ba80afc1bc4b52b3982cd135855792c6c772))
+
 ## 0.1.0 (2023-12-02)
 
 
