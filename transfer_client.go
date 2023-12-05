@@ -77,6 +77,6 @@ func (c *transferClient) newRequest(ctx context.Context, method, url string, bod
 		}).Debug("providusbank.client -> request")
 	}
 
-	req.Header.Set("Accept", "application/json")
+	req.Header.Set("Accept-Encoding", "identity")
 	return NewRequest(req), nil
 }

@@ -75,7 +75,7 @@ func (c *accountClient) newRequest(ctx context.Context, method, url string, body
 
 	signature := sha512.Sum512([]byte(fmt.Sprintf("%s:%s", c.token, c.secret)))
 
-	req.Header.Set("Accept", "application/json")
+	req.Header.Set("Accept-Encoding", "identity")
 	req.Header.Set("Client-Id", c.token)
 	req.Header.Set("X-Auth-Signature", fmt.Sprintf("%x", signature))
 	return NewRequest(req), nil
