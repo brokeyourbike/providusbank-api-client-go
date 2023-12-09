@@ -15,9 +15,18 @@ go get github.com/brokeyourbike/providusbank-api-client-go
 
 ## Usage
 
+### Account
+
 ```go
 accountClient := providusbank.NewAccountClient("providusbank.com", "client_id", "client_secret")
+accountClient.CreateDynamicAccount(context.TODO(), "John Doe")
+```
+
+### Transfer
+
+```go
 transferClient := providusbank.NewTransferClient("providusbank.com", "username", "password")
+transferClient.GetNIPBanks(context.TODO())
 ```
 
 ## Authors
