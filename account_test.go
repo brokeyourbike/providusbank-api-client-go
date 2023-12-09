@@ -9,6 +9,8 @@ import (
 	"testing"
 
 	"github.com/brokeyourbike/providusbank-api-client-go"
+	"github.com/sirupsen/logrus"
+	logrustest "github.com/sirupsen/logrus/hooks/test"
 	"github.com/stretchr/testify/assert"
 	mock "github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
@@ -59,7 +61,11 @@ func TestCreateDynamicAccount_AuthFailed(t *testing.T) {
 
 func TestCreateDynamicAccount_Success(t *testing.T) {
 	mockHttpClient := providusbank.NewMockHttpClient(t)
-	client := providusbank.NewAccountClient("a.com", "john", "pass", providusbank.WithHTTPClient(mockHttpClient))
+
+	logger, hook := logrustest.NewNullLogger()
+	logger.SetLevel(logrus.DebugLevel)
+
+	client := providusbank.NewAccountClient("a.com", "john", "pass", providusbank.WithHTTPClient(mockHttpClient), providusbank.WithLogger(logger))
 
 	resp := &http.Response{StatusCode: http.StatusOK, Body: io.NopCloser(bytes.NewReader(createDynamicAccountSuccess))}
 	mockHttpClient.On("Do", mock.AnythingOfType("*http.Request")).Return(resp, nil).Once()
@@ -68,6 +74,14 @@ func TestCreateDynamicAccount_Success(t *testing.T) {
 	require.NoError(t, err)
 
 	assert.True(t, got.Success)
+
+	require.Equal(t, 2, len(hook.Entries))
+	require.Contains(t, hook.Entries[0].Data, "http.request.method")
+	require.Contains(t, hook.Entries[0].Data, "http.request.url")
+	require.Contains(t, hook.Entries[0].Data, "http.request.body.content")
+	require.Contains(t, hook.Entries[1].Data, "http.response.status_code")
+	require.Contains(t, hook.Entries[1].Data, "http.response.body.content")
+	require.Contains(t, hook.Entries[1].Data, "http.response.headers")
 }
 
 func TestCreateReservedAccount_Success(t *testing.T) {
