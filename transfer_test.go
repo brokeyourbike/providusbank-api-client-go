@@ -25,6 +25,15 @@ var getNIPBanksSuccess []byte
 //go:embed testdata/TransactionStatus-success.json
 var transactionStatusSuccess []byte
 
+func TestGetNIPBanks_RequestErr(t *testing.T) {
+	mockHttpClient := providusbank.NewMockHttpClient(t)
+	client := providusbank.NewTransferClient("a.com", "john", "pass", providusbank.WithHTTPClient(mockHttpClient))
+
+	_, err := client.GetNIPBanks(nil) //lint:ignore SA1012 testing failure
+	require.Error(t, err)
+	require.Contains(t, err.Error(), "failed to create request")
+}
+
 func TestGetNIPBanks_Err(t *testing.T) {
 	mockHttpClient := providusbank.NewMockHttpClient(t)
 	client := providusbank.NewTransferClient("a.com", "john", "pass", providusbank.WithHTTPClient(mockHttpClient))
@@ -65,6 +74,15 @@ func TestGetNIPBanks_Success(t *testing.T) {
 	require.Contains(t, hook.Entries[1].Data, "http.response.headers")
 }
 
+func TestGetBVNDetails_RequestErr(t *testing.T) {
+	mockHttpClient := providusbank.NewMockHttpClient(t)
+	client := providusbank.NewTransferClient("a.com", "john", "pass", providusbank.WithHTTPClient(mockHttpClient))
+
+	_, err := client.GetBVNDetails(nil, "bvn") //lint:ignore SA1012 testing failure
+	require.Error(t, err)
+	require.Contains(t, err.Error(), "failed to create request")
+}
+
 func TestGetBVNDetails_AuthFailed(t *testing.T) {
 	mockHttpClient := providusbank.NewMockHttpClient(t)
 	client := providusbank.NewTransferClient("a.com", "john", "pass", providusbank.WithHTTPClient(mockHttpClient))
@@ -83,6 +101,15 @@ func TestGetBVNDetails_AuthFailed(t *testing.T) {
 	assert.Equal(t, "05", got.ResponseCode)
 }
 
+func TestGetTransactionStatus_RequestErr(t *testing.T) {
+	mockHttpClient := providusbank.NewMockHttpClient(t)
+	client := providusbank.NewTransferClient("a.com", "john", "pass", providusbank.WithHTTPClient(mockHttpClient))
+
+	_, err := client.GetTransactionStatus(nil, "reference") //lint:ignore SA1012 testing failure
+	require.Error(t, err)
+	require.Contains(t, err.Error(), "failed to create request")
+}
+
 func TestGetTransactionStatus_Success(t *testing.T) {
 	mockHttpClient := providusbank.NewMockHttpClient(t)
 	client := providusbank.NewTransferClient("a.com", "john", "pass", providusbank.WithHTTPClient(mockHttpClient))
@@ -94,4 +121,49 @@ func TestGetTransactionStatus_Success(t *testing.T) {
 	require.NoError(t, err)
 
 	assert.Equal(t, "2.50", got.Amount)
+}
+
+func TestGetNIPTransactionStatus_RequestErr(t *testing.T) {
+	mockHttpClient := providusbank.NewMockHttpClient(t)
+	client := providusbank.NewTransferClient("a.com", "john", "pass", providusbank.WithHTTPClient(mockHttpClient))
+
+	_, err := client.GetNIPTransactionStatus(nil, "reference") //lint:ignore SA1012 testing failure
+	require.Error(t, err)
+	require.Contains(t, err.Error(), "failed to create request")
+}
+
+func TestGetAccount_RequestErr(t *testing.T) {
+	mockHttpClient := providusbank.NewMockHttpClient(t)
+	client := providusbank.NewTransferClient("a.com", "john", "pass", providusbank.WithHTTPClient(mockHttpClient))
+
+	_, err := client.GetAccount(nil, "number") //lint:ignore SA1012 testing failure
+	require.Error(t, err)
+	require.Contains(t, err.Error(), "failed to create request")
+}
+
+func TestGetNIPAccount_RequestErr(t *testing.T) {
+	mockHttpClient := providusbank.NewMockHttpClient(t)
+	client := providusbank.NewTransferClient("a.com", "john", "pass", providusbank.WithHTTPClient(mockHttpClient))
+
+	_, err := client.GetNIPAccount(nil, "bank_code", "number") //lint:ignore SA1012 testing failure
+	require.Error(t, err)
+	require.Contains(t, err.Error(), "failed to create request")
+}
+
+func TestFundTransfer_RequestErr(t *testing.T) {
+	mockHttpClient := providusbank.NewMockHttpClient(t)
+	client := providusbank.NewTransferClient("a.com", "john", "pass", providusbank.WithHTTPClient(mockHttpClient))
+
+	_, err := client.FundTransfer(nil, providusbank.FundTransferPayload{}) //lint:ignore SA1012 testing failure
+	require.Error(t, err)
+	require.Contains(t, err.Error(), "failed to create request")
+}
+
+func TestNIPFundTransfer_RequestErr(t *testing.T) {
+	mockHttpClient := providusbank.NewMockHttpClient(t)
+	client := providusbank.NewTransferClient("a.com", "john", "pass", providusbank.WithHTTPClient(mockHttpClient))
+
+	_, err := client.NIPFundTransfer(nil, providusbank.NIPFundTransferPayload{}) //lint:ignore SA1012 testing failure
+	require.Error(t, err)
+	require.Contains(t, err.Error(), "failed to create request")
 }
