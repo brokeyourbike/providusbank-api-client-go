@@ -25,6 +25,9 @@ var getNIPBanksSuccess []byte
 //go:embed testdata/TransactionStatus-success.json
 var transactionStatusSuccess []byte
 
+//go:embed testdata/FundTransfer-fail.json
+var fundTransferFail []byte
+
 func TestGetNIPBanks_RequestErr(t *testing.T) {
 	mockHttpClient := providusbank.NewMockHttpClient(t)
 	client := providusbank.NewTransferClient("a.com", "john", "pass", providusbank.WithHTTPClient(mockHttpClient))
@@ -92,6 +95,7 @@ func TestGetBVNDetails_AuthFailed(t *testing.T) {
 		b, err := io.ReadAll(req.Body)
 		require.NoError(t, err)
 
+		// username and passoword passed as part of request
 		return string(b) == `{"userName":"john","password":"pass","bvn":"bvn"}`
 	})).Return(resp, nil).Once()
 
@@ -157,6 +161,19 @@ func TestFundTransfer_RequestErr(t *testing.T) {
 	_, err := client.FundTransfer(nil, providusbank.FundTransferPayload{}) //lint:ignore SA1012 testing failure
 	require.Error(t, err)
 	require.Contains(t, err.Error(), "failed to create request")
+}
+
+func TestFundTransfer_Fail(t *testing.T) {
+	mockHttpClient := providusbank.NewMockHttpClient(t)
+	client := providusbank.NewTransferClient("a.com", "john", "pass", providusbank.WithHTTPClient(mockHttpClient))
+
+	resp := &http.Response{StatusCode: http.StatusOK, Body: io.NopCloser(bytes.NewReader(fundTransferFail))}
+	mockHttpClient.On("Do", mock.AnythingOfType("*http.Request")).Return(resp, nil).Once()
+
+	got, err := client.FundTransfer(context.TODO(), providusbank.FundTransferPayload{})
+	require.NoError(t, err)
+
+	assert.NotEqual(t, "00", got.ResponseCode)
 }
 
 func TestNIPFundTransfer_RequestErr(t *testing.T) {
