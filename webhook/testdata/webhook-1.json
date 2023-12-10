@@ -1,0 +1,17 @@
+{
+    "sessionId": "123412341234",
+    "accountNumber": "12834u12304",
+    "tranRemarks": "PTestFROM UBA/ CREDIT-EASY LOAN-NIP/SEYI CAP/124850127458127",
+    "transactionAmount": "100",
+    "settledAmount": "100",
+    "feeAmount": "1.2",
+    "vatAmount": "0",
+    "currency": "NGN",
+    "initiationTranRef": "",
+    "settlementId": "213490582394058239045",
+    "sourceAccountNumber": "12341280304",
+    "sourceAccountName": "JOHN DOE",
+    "sourceBankName": "UNITED BANK FOR AFRICA",
+    "channelId": "1",
+    "tranDateTime": "2021-03-01 18:09:20.000"
+}
