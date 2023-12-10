@@ -14,11 +14,14 @@ import (
 var webhook1 []byte
 
 func TestWebhookResponse(t *testing.T) {
-	r1 := webhook.NewResponse("123", webhook.CodeSuccess, "yes")
+	r1 := webhook.NewResponseWithSession("123", webhook.CodeSuccess, "yes")
 	assert.True(t, r1.RequestSuccessful)
 
-	r2 := webhook.NewResponse("123", webhook.CodeSystemFailure, "yes")
+	r2 := webhook.NewResponseWithSession("123", webhook.CodeSystemFailure, "yes")
 	assert.False(t, r2.RequestSuccessful)
+
+	r3 := webhook.NewResponse(webhook.CodeSystemFailure, "yes")
+	assert.False(t, r3.RequestSuccessful)
 }
 
 func TestWebhookRequestShort(t *testing.T) {

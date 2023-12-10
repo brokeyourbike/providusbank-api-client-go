@@ -17,8 +17,8 @@ const (
 )
 
 type RequestShort struct {
-	SessionID           string            `json:"sessionId"`
-	SettlementID        string            `json:"settlementId"`
+	SessionID           string            `json:"sessionId" binding:"required"`
+	SettlementID        string            `json:"settlementId" binding:"required"`
 	ChannelID           string            `json:"channelId"`
 	AccountNumber       string            `json:"accountNumber"`
 	Amount              float64           `json:"transactionAmount"`
@@ -98,12 +98,20 @@ func (r *RequestShort) UnmarshalJSON(data []byte) error {
 
 type Response struct {
 	RequestSuccessful bool   `json:"requestSuccessful"`
-	SessionID         string `json:"sessionId"`
+	SessionID         string `json:"sessionId,omitempty"`
 	MesponseMessage   string `json:"responseMessage"`
 	ResponseCode      Code   `json:"responseCode"`
 }
 
-func NewResponse(sessionID string, code Code, message string) Response {
+func NewResponse(code Code, message string) Response {
+	return Response{
+		RequestSuccessful: code == CodeSuccess,
+		MesponseMessage:   message,
+		ResponseCode:      code,
+	}
+}
+
+func NewResponseWithSession(sessionID string, code Code, message string) Response {
 	return Response{
 		RequestSuccessful: code == CodeSuccess,
 		SessionID:         sessionID,
