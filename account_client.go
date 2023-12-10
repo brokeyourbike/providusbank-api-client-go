@@ -3,13 +3,13 @@ package providusbank
 import (
 	"bytes"
 	"context"
-	"crypto/sha512"
 	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
 	"strings"
 
+	"github.com/brokeyourbike/providusbank-api-client-go/signature"
 	"github.com/sirupsen/logrus"
 )
 
@@ -30,6 +30,7 @@ type accountClient struct {
 	baseURL string
 	token   string
 	secret  string
+	signer  signature.Generator
 }
 
 func NewAccountClient(baseURL, token, secret string, options ...ClientOption) *accountClient {
@@ -37,6 +38,7 @@ func NewAccountClient(baseURL, token, secret string, options ...ClientOption) *a
 		baseURL: strings.TrimSuffix(baseURL, "/"),
 		token:   token,
 		secret:  secret,
+		signer:  signature.NewSigner(token, secret),
 	}
 
 	c.httpClient = http.DefaultClient
@@ -75,9 +77,7 @@ func (c *accountClient) newRequest(ctx context.Context, method, url string, body
 		}).Debug("providusbank.client -> request")
 	}
 
-	signature := sha512.Sum512([]byte(fmt.Sprintf("%s:%s", c.token, c.secret)))
-
 	req.Header.Set("Client-Id", c.token)
-	req.Header.Set("X-Auth-Signature", fmt.Sprintf("%x", signature))
+	req.Header.Set("X-Auth-Signature", c.signer.Generate(ctx))
 	return NewRequest(req), nil
 }
