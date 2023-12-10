@@ -173,7 +173,7 @@ func TestFundTransfer_Fail(t *testing.T) {
 	got, err := client.FundTransfer(context.TODO(), providusbank.FundTransferPayload{})
 	require.NoError(t, err)
 
-	assert.NotEqual(t, "00", got.ResponseCode)
+	assert.NotEqual(t, providusbank.CodeCompleted, got.ResponseCode)
 }
 
 func TestNIPFundTransfer_RequestErr(t *testing.T) {
