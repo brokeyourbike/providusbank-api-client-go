@@ -1,7 +1,7 @@
 # providusbank-api-client-go
 
-[![Go Reference](https://pkg.go.dev/badge/github.com/brokeyourbike/paystack-api-client-go.svg)](https://pkg.go.dev/github.com/brokeyourbike/paystack-api-client-go)
-[![Go Report Card](https://goreportcard.com/badge/github.com/brokeyourbike/paystack-api-client-go)](https://goreportcard.com/report/github.com/brokeyourbike/paystack-api-client-go)
+[![Go Reference](https://pkg.go.dev/badge/github.com/brokeyourbike/providusbank-api-client-go.svg)](https://pkg.go.dev/github.com/brokeyourbike/providusbank-api-client-go)
+[![Go Report Card](https://goreportcard.com/badge/github.com/brokeyourbike/providusbank-api-client-go)](https://goreportcard.com/report/github.com/brokeyourbike/providusbank-api-client-go)
 [![Maintainability](https://api.codeclimate.com/v1/badges/7764dfd1735596f6e9c1/maintainability)](https://codeclimate.com/github/brokeyourbike/providusbank-api-client-go/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/7764dfd1735596f6e9c1/test_coverage)](https://codeclimate.com/github/brokeyourbike/providusbank-api-client-go/test_coverage)
 
