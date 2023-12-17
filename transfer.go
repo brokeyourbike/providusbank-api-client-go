@@ -171,12 +171,12 @@ type fundTransferPayload struct {
 }
 
 type FundTransferPayload struct {
-	CreditAccount string `json:"creditAccount"`
-	DebitAccount  string `json:"debitAccount"`
-	Currency      string `json:"currencyCode"`
-	Amount        string `json:"transactionAmount"`
-	Reference     string `json:"transactionReference"`
-	Narration     string `json:"narration"`
+	CreditAccount string  `json:"creditAccount"`
+	DebitAccount  string  `json:"debitAccount"`
+	Currency      string  `json:"currencyCode"`
+	Amount        float64 `json:"transactionAmount"`
+	Reference     string  `json:"transactionReference"`
+	Narration     string  `json:"narration"`
 }
 
 type FundTransferResponse struct {
@@ -204,14 +204,14 @@ type nipFundTransferPayload struct {
 }
 
 type NIPFundTransferPayload struct {
-	SourceAccountName        string `json:"sourceAccountName"`
-	BeneficiaryAccountName   string `json:"beneficiaryAccountName"`
-	BeneficiaryAccountNumber string `json:"beneficiaryAccountNumber"`
-	BeneficiaryBank          string `json:"beneficiaryBank"`
-	Currency                 string `json:"currencyCode"`
-	Amount                   string `json:"transactionAmount"`
-	Reference                string `json:"transactionReference"`
-	Narration                string `json:"narration"`
+	SourceAccountName        string  `json:"sourceAccountName"`
+	BeneficiaryAccountName   string  `json:"beneficiaryAccountName"`
+	BeneficiaryAccountNumber string  `json:"beneficiaryAccountNumber"`
+	BeneficiaryBank          string  `json:"beneficiaryBank"`
+	Currency                 string  `json:"currencyCode"`
+	Amount                   float64 `json:"transactionAmount"`
+	Reference                string  `json:"transactionReference"`
+	Narration                string  `json:"narration"`
 }
 
 type NIPFundTransferResponse struct {
