@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.3.2](https://www.github.com/brokeyourbike/providusbank-api-client-go/compare/v0.3.1...v0.3.2) (2023-12-17)
+
+
+### Bug Fixes
+
+* amount is float ([28fd385](https://www.github.com/brokeyourbike/providusbank-api-client-go/commit/28fd385a20bd4b367a04550df5e1d332b7109948))
+
 ### [0.3.1](https://www.github.com/brokeyourbike/providusbank-api-client-go/compare/v0.3.0...v0.3.1) (2023-12-15)
 
 
