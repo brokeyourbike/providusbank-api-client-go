@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.3.3](https://www.github.com/brokeyourbike/providusbank-api-client-go/compare/v0.3.2...v0.3.3) (2023-12-20)
+
+
+### Bug Fixes
+
+* use correct path ([7395459](https://www.github.com/brokeyourbike/providusbank-api-client-go/commit/7395459ff10adbac0540d98e542f07ec900f5d73))
+
 ### [0.3.2](https://www.github.com/brokeyourbike/providusbank-api-client-go/compare/v0.3.1...v0.3.2) (2023-12-17)
 
 
