@@ -102,7 +102,7 @@ func TestGetBVNDetails_AuthFailed(t *testing.T) {
 	got, err := client.GetBVNDetails(context.TODO(), "bvn")
 	require.NoError(t, err)
 
-	assert.Equal(t, "05", got.ResponseCode)
+	assert.Equal(t, providusbank.CodeDoNotHonor, got.ResponseCode)
 }
 
 func TestGetTransactionStatus_RequestErr(t *testing.T) {
