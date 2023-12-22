@@ -7,7 +7,7 @@ import (
 )
 
 type NIPBanksResponse struct {
-	ResponseCode    string `json:"responseCode"`
+	ResponseCode    Code   `json:"responseCode"`
 	ResponseMessage string `json:"responseMessage"`
 	Banks           []struct {
 		Code string `json:"bankCode"`
@@ -46,7 +46,7 @@ type getBvnDetailsPayload struct {
 }
 
 type BVNDetailsResponse struct {
-	ResponseCode    string `json:"responseCode"`
+	ResponseCode    Code   `json:"responseCode"`
 	ResponseMessage string `json:"responseMessage"`
 	FirstName       string `json:"firstName"`
 	MiddleName      string `json:"middleName"`
@@ -71,7 +71,7 @@ type getTransactionStatusPayload struct {
 }
 
 type TransactionStatusResponse struct {
-	ResponseCode    string `json:"responseCode"`
+	ResponseCode    Code   `json:"responseCode"`
 	ResponseMessage string `json:"responseMessage"`
 	Currency        string `json:"currency"`
 	Amount          string `json:"amount"`
@@ -94,7 +94,7 @@ func (c *transferClient) GetTransactionStatus(ctx context.Context, reference str
 }
 
 type NIPTransactionStatusResponse struct {
-	ResponseCode           string `json:"responseCode"`
+	ResponseCode           Code   `json:"responseCode"`
 	ResponseMessage        string `json:"responseMessage"`
 	Currency               string `json:"currency"`
 	Amount                 string `json:"amount"`
@@ -121,7 +121,7 @@ type getAccountPayload struct {
 }
 
 type AccountResponse struct {
-	ResponseCode    string `json:"responseCode"`
+	ResponseCode    Code   `json:"responseCode"`
 	ResponseMessage string `json:"responseMessage"`
 }
 
@@ -144,7 +144,7 @@ type getNIPAccountPayload struct {
 }
 
 type NIPAccountResponse struct {
-	ResponseCode         string `json:"responseCode"`
+	ResponseCode         Code   `json:"responseCode"`
 	ResponseMessage      string `json:"responseMessage"`
 	AccountNumber        string `json:"accountNumber"`
 	AccountName          string `json:"accountName"`
@@ -180,7 +180,7 @@ type FundTransferPayload struct {
 }
 
 type FundTransferResponse struct {
-	ResponseCode    string `json:"responseCode"`
+	ResponseCode    Code   `json:"responseCode"`
 	ResponseMessage string `json:"responseMessage"`
 	Currency        string `json:"currency"`
 	Amount          string `json:"amount"`
@@ -215,7 +215,7 @@ type NIPFundTransferPayload struct {
 }
 
 type NIPFundTransferResponse struct {
-	ResponseCode    string `json:"responseCode"`
+	ResponseCode    Code   `json:"responseCode"`
 	ResponseMessage string `json:"responseMessage"`
 	Reference       string `json:"transactionReference"`
 	SessionID       string `json:"sessionId"`

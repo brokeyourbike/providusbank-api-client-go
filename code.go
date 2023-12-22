@@ -2,13 +2,62 @@ package providusbank
 
 type Code string
 
+func (c Code) IsSuccesful() bool {
+	return c == CodeCompleted
+}
+
+func (c Code) IsFailed() bool {
+	switch c {
+	case CodeInvalidSender,
+		CodeDoNotHonor,
+		CodeInvalidAccount,
+		CodeAccountNameMismatch,
+		CodeInvalidAmount,
+		CodeUnknownBankCode,
+		CodeNoActionTaken,
+		CodeDuplicateRecord,
+		CodeFormatError,
+		CodeTransferNotSuccessful,
+		CodeServiceUnavailable,
+		CodeTransactionNotPermittedToSender,
+		CodeTransactionNotPermittedToChannel,
+		CodeTransferLimitExceeded,
+		CodeSecurityViolation,
+		CodeWithdrawalFrequencyExceeded,
+		CodeDebitAccountInvalid,
+		CodeDuplicateReference,
+		CodeMethodNotAllowed,
+		CodeCreditAccountNotPermitted,
+		CodeRecipientBankNotAvailable,
+		CodeRoutingError,
+		CodeDuplicateTransaction,
+		CodeSustemMalfunction,
+		CodeDestinationResponseTimeout,
+		CodeTransactionNotExists,
+		CodeCreditAccountInvalid,
+		CodeCreditAccountDormant,
+		CodeInsufficientBalance,
+		CodeCurrencyMismatch,
+		CodeOtpFailInvalidAccountNumber,
+		CodeCustomerNotEnrolled,
+		CodeCustomerNotActive,
+		CodeCustomerNotValidated,
+		CodeCustomerAlreadyEnrolled,
+		CodeCustomerAlreadyValidated,
+		CodeOtpMismatch,
+		CodeCbaSystemError:
+		return true
+	}
+	return false
+}
+
 const (
 	CodeCompleted                        Code = "00"
 	CodeDormantAccount                   Code = "06"
 	CodeTransactionNotExists             Code = "01"
 	CodeInvalidSender                    Code = "03"
 	CodeDoNotHonor                       Code = "05"
-	CodeInvalidaAccount                  Code = "07"
+	CodeInvalidAccount                   Code = "07"
 	CodeAccountNameMismatch              Code = "08"
 	CodeInProgress                       Code = "09"
 	CodeReversalNotSuccessful            Code = "11"
