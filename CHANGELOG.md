@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.4.1](https://www.github.com/brokeyourbike/providusbank-api-client-go/compare/v0.4.0...v0.4.1) (2023-12-22)
+
+
+### Bug Fixes
+
+* use nigeria time ([3652e21](https://www.github.com/brokeyourbike/providusbank-api-client-go/commit/3652e2127949a7dbd2f66f34009d1388fc4e2688))
+
 ## [0.4.0](https://www.github.com/brokeyourbike/providusbank-api-client-go/compare/v0.3.3...v0.4.0) (2023-12-22)
 
 
