@@ -11,6 +11,11 @@ type Time struct {
 }
 
 func (t *Time) UnmarshalJSON(b []byte) error {
+	loc, err := time.LoadLocation("Africa/Lagos")
+	if err != nil {
+		return fmt.Errorf("cannot find timezeone: %w", err)
+	}
+
 	s := strings.Trim(string(b), `"`)
 	if s == "" {
 		return nil
@@ -24,7 +29,7 @@ func (t *Time) UnmarshalJSON(b []byte) error {
 	}
 
 	for _, f := range formats {
-		parsed, err := time.Parse(f, s)
+		parsed, err := time.ParseInLocation(f, s, loc)
 		if err == nil {
 			t.Time = parsed
 			return nil
