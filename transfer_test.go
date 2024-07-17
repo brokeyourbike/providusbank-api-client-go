@@ -96,7 +96,7 @@ func TestGetBVNDetails_AuthFailed(t *testing.T) {
 		require.NoError(t, err)
 
 		// username and passoword passed as part of request
-		return string(b) == `{"userName":"john","password":"pass","bvn":"bvn"}`
+		return string(b) == `{"userName":"username","password":"password","bvn":"bvn"}`
 	})).Return(resp, nil).Once()
 
 	got, err := client.GetBVNDetails(context.TODO(), "bvn")
