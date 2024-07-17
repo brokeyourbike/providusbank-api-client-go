@@ -1,0 +1,17 @@
+{
+    "sessionId": "123456789",
+    "initiationTranRef": "",
+    "accountNumber": "987654321",
+    "tranRemarks": "",
+    "transactionAmount": 10593.0,
+    "settledAmount": 0.0,
+    "feeAmount": 0.0,
+    "vatAmount": 0.0,
+    "currency": "NGN",
+    "settlementId": "SETTLEMENT12345678",
+    "sourceAccountNumber": "",
+    "sourceAccountName": "",
+    "sourceBankName": "",
+    "channelId": "",
+    "tranDateTime": "2/13/2021 4:11:09 PM"
+}
