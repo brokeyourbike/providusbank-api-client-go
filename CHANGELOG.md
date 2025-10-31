@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.5.0](https://www.github.com/brokeyourbike/providusbank-api-client-go/compare/v0.4.2...v0.5.0) (2025-10-31)
+
+
+### Features
+
+* balance ([0f68366](https://www.github.com/brokeyourbike/providusbank-api-client-go/commit/0f6836685d0344421cb8beae257f513164f41a78))
+
+
+### Bug Fixes
+
+* mockery ([6fc9b17](https://www.github.com/brokeyourbike/providusbank-api-client-go/commit/6fc9b176ec2773357702ea9258ef11425ff59667))
+
 ### [0.4.2](https://www.github.com/brokeyourbike/providusbank-api-client-go/compare/v0.4.1...v0.4.2) (2024-07-17)
 
 
