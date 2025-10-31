@@ -2,13 +2,13 @@
 // README at: https://github.com/devcontainers/templates/tree/main/src/go
 {
     "name": "providusbank-api-client-go",
-    "image": "mcr.microsoft.com/devcontainers/go:1.22",
+    "image": "mcr.microsoft.com/devcontainers/go:1.24",
     "features": {
         "ghcr.io/brokeyourbike/devcontainer-features/staticcheck:0": {
-            "version": "2023.1.6"
+            "version": "2025.1.1"
         },
         "ghcr.io/brokeyourbike/devcontainer-features/mockery-go:0": {
-            "version": "2.33.0"
+            "version": "2.53.3"
         }
     },
     "customizations": {
