@@ -123,6 +123,13 @@ type getAccountPayload struct {
 type AccountResponse struct {
 	ResponseCode    Code   `json:"responseCode"`
 	ResponseMessage string `json:"responseMessage"`
+	AccountNumber   string `json:"accountNumber"`
+	AccountName     string `json:"accountName"`
+	AccountStatus   string `json:"accountStatus"`
+	Balance         string `json:"availableBalance"`
+	Email           string `json:"emailAddress"`
+	Phone           string `json:"phoneNumber"`
+	BVN             string `json:"bvn"`
 }
 
 // GetAccount returns the details tied to your account including the balance.
